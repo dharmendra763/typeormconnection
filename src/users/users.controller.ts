@@ -24,21 +24,5 @@ export class UsersController {
     const { email, password } = body;
     return this.authService.signin(email, password);
   }
-
-  @Get("/color/:color")
-  setColor(
-    @Param("color") color: string,
-    @Session() session: any
-  ) {
-    session.color = color;
-  }
-
-  @Get("/color")
-  getColor(
-    @Session() session: any
-  ) {
-    return session?.color || "";
-  }
-
 }
  
