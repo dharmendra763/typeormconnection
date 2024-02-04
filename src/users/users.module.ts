@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -16,7 +17,10 @@ import { CurrentUserInterceptor } from './interceptors/current-user.interceptor'
   providers: [
     UsersService,
     AuthService,
-    CurrentUserInterceptor
+    {
+      provide: APP_INTERCEPTOR,
+      useClass : CurrentUserInterceptor
+    },
   ]
 })
 export class UsersModule {}
