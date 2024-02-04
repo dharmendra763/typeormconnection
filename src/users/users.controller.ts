@@ -1,4 +1,4 @@
-import { Controller, Post, Get, Put, Body } from '@nestjs/common';
+import { Controller, Post, Body, Session, Get, Param } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UsersService } from './users.service';
 import { AuthService } from './auth.service';
@@ -10,7 +10,7 @@ export class UsersController {
   constructor(
     private userService: UsersService,
     private authService: AuthService,
-  ) {}
+  ) { }
 
   @Post('/signup')
   createUser(@Body() body: CreateUserDto) {
@@ -24,4 +24,21 @@ export class UsersController {
     const { email, password } = body;
     return this.authService.signin(email, password);
   }
+
+  @Get("/color/:color")
+  setColor(
+    @Param("color") color: string,
+    @Session() session: any
+  ) {
+    session.color = color;
+  }
+
+  @Get("/color")
+  getColor(
+    @Session() session: any
+  ) {
+    return session?.color || "";
+  }
+
 }
+ 
