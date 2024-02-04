@@ -16,12 +16,13 @@ export class UsersService {
 
     create(email: string, password: string) {
         const user = this.userRepo.create({email, password});
-
         return this.userRepo.save(user);
-
     }
 
     async findOne(id: number){
+        if (!id) {
+            return null;
+        }
         const user = await this.userRepo.findOneBy({id})
         if(!user) {
             throw new HttpException('Forbidden', HttpStatus.NOT_FOUND);  
